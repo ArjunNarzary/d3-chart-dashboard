@@ -6,6 +6,7 @@ import BarChart from "../../components/BarChart"
 import ChartLoader from "../../components/ChartLoader"
 import DonutChart from "../../components/DonutChart"
 import DonutLoader from "../../components/DonutLoader"
+import ClosedFiscalQuarterTable from "../../components/ClosedFiscalQuarterTable"
 
 export default function AccountIndustryContainer() {
   const { data, loading } = useApi<IResponseType>({
@@ -23,7 +24,18 @@ export default function AccountIndustryContainer() {
           <Grid size={{ sm: 12, md: 6 }}>
             {loading ? <DonutLoader /> : data && <DonutChart data={data} />}
           </Grid>
-          <Grid size={12}></Grid>
+          <Grid size={12}>
+            {loading ? (
+              <DonutLoader />
+            ) : (
+              data && (
+                <ClosedFiscalQuarterTable
+                  data={data}
+                  subHeader="Account Industry"
+                />
+              )
+            )}
+          </Grid>
         </Grid>
       </CardContent>
     </Card>
