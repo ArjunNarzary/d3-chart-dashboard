@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback } from "react"
 type Status = "idle" | "loading" | "success" | "error"
 
 interface UseApiOptions<T> {
-  fetchFn: () => Promise<T>
+  fetchFn: (arg: any) => Promise<T>
+  args: any
   immediate?: boolean
 }
 
@@ -17,6 +18,7 @@ interface UseApiReturn<T> {
 
 export function useApi<T>({
   fetchFn,
+  args,
   immediate = true,
 }: UseApiOptions<T>): UseApiReturn<T> {
   const [data, setData] = useState<T | null>(null)
@@ -27,7 +29,7 @@ export function useApi<T>({
     setStatus("loading")
     setError(null)
     try {
-      const response = await fetchFn()
+      const response = await fetchFn(args)
       setData(response)
       setStatus("success")
     } catch (err) {

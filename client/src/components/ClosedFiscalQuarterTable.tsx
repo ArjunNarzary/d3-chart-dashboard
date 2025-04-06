@@ -66,8 +66,8 @@ const ClosedFiscalQuarterTable = ({
 
   return (
     <Card className="overflow-auto text-sm">
-      <CardContent className="p-0">
-        <table className="min-w-full ">
+      <CardContent className="p-0 overflow-auto">
+        <table className="min-w-full">
           <thead>
             <tr>
               <th className=" p-2 bg-white text-black">
