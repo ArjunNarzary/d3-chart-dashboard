@@ -10,32 +10,32 @@ const ClosedFiscalQuarterTable = ({
   data: IResponseType
   subHeader: string
 }) => {
-  const [allQuarters] = useState(() => Object.keys(data))
-  const [industries] = useState(() => {
-    const industries = new Set<string>()
+  const [allQuarters] = useState(() => Object.keys(data)) // Save all avaible quarters
+  const [types] = useState(() => {
+    const curTypes = new Set<string>()
     allQuarters.forEach((q) => {
-      Object.keys(data[q]).forEach((industry) => industries.add(industry))
+      Object.keys(data[q]).forEach((type) => curTypes.add(type))
     })
-    return Array.from(industries)
-  })
-  const [totalCount, setTotalCount] = useState(0)
-  const [totalACV, setTotalACV] = useState(0)
+    return Array.from(curTypes)
+  }) // Save all available types
+  const [totalCount, setTotalCount] = useState(0) // Save total count
+  const [totalACV, setTotalACV] = useState(0) // Save total ACV
   const [totalOfQuarters, setTotalOfQuarters] = useState<{
     [key: string]: { count: number; acv: number; total_percentage?: number }
-  }>({})
+  }>({}) // Total count, acv and percentage of each types
 
   useEffect(() => {
-    const totals = industries.reduce((acc, industry) => {
+    const totals = types.reduce((acc, type) => {
       let count = 0
       let acv = 0
       allQuarters.forEach((q) => {
-        const row = data[q][industry]
+        const row = data[q][type]
         if (row) {
           count += row.total_count
           acv += row.total_acv
         }
       })
-      acc[industry] = { count, acv }
+      acc[type] = { count, acv }
       return acc
     }, {} as Record<string, { count: number; acv: number }>)
 
@@ -62,7 +62,7 @@ const ClosedFiscalQuarterTable = ({
     setTotalOfQuarters(newTotals)
     setTotalCount(totalCount)
     setTotalACV(totalACV)
-  }, [data, allQuarters, industries])
+  }, [data, allQuarters, types])
 
   return (
     <Card className="overflow-auto text-sm">
@@ -103,14 +103,14 @@ const ClosedFiscalQuarterTable = ({
             </tr>
           </thead>
           <tbody>
-            {industries.map((industry, index) => (
+            {types.map((type, index) => (
               <tr
-                key={industry}
+                key={type}
                 className={`${index % 2 === 0 ? "bg-gray-100" : ""}`}
               >
-                <td className=" p-2 font-medium">{industry}</td>
+                <td className=" p-2 font-medium">{type}</td>
                 {allQuarters.map((q) => {
-                  const entry = data[q][industry]
+                  const entry = data[q][type]
                   return (
                     <React.Fragment key={q}>
                       <td className=" p-2 text-center">
@@ -128,13 +128,13 @@ const ClosedFiscalQuarterTable = ({
                   )
                 })}
                 <td className=" p-2 text-center">
-                  {totalOfQuarters[industry]?.count}
+                  {totalOfQuarters[type]?.count}
                 </td>
                 <td className=" p-2 text-right">
-                  ${formatCompactNumber(totalOfQuarters[industry]?.acv)}
+                  ${formatCompactNumber(totalOfQuarters[type]?.acv)}
                 </td>
                 <td className=" p-2 text-right">
-                  {totalOfQuarters[industry]?.total_percentage}%
+                  {totalOfQuarters[type]?.total_percentage}%
                 </td>
               </tr>
             ))}

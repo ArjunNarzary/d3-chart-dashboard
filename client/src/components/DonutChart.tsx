@@ -3,6 +3,7 @@ import * as d3 from "d3"
 import { DataItem, IResponseType } from "../interfaces"
 import { formatCompactNumber } from "../lib/formatter"
 import { adjustLabelYPositions } from "../lib/adjustYPosition"
+import { Card, CardContent } from "@mui/material"
 
 const DonutChart = ({ data }: { data: IResponseType }) => {
   const ref = useRef(null)
@@ -58,6 +59,7 @@ const DonutChart = ({ data }: { data: IResponseType }) => {
 
     const total = d3.sum(formattedData, (d) => d.value)
 
+    // Add total value at center
     svg
       .append("text")
       .attr("text-anchor", "middle")
@@ -122,9 +124,11 @@ const DonutChart = ({ data }: { data: IResponseType }) => {
   }, [data])
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <svg ref={ref}></svg>
-    </div>
+    <Card className="w-full h-full">
+      <CardContent className="w-full h-full flex justify-center items-center">
+        <svg ref={ref}></svg>
+      </CardContent>
+    </Card>
   )
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import * as d3 from "d3"
 import { IResponseType } from "../interfaces"
 import { formatCompactNumber } from "../lib/formatter"
+import { Card, CardContent } from "@mui/material"
 
 const BarChart = ({ data }: { data: IResponseType }) => {
   const svgRef = useRef<SVGSVGElement>(null)
@@ -166,16 +167,18 @@ const BarChart = ({ data }: { data: IResponseType }) => {
   }, [data])
 
   return (
-    <>
-      <div
-        id="tooltip"
-        className="absolute bg-white  border-[1px] border-[#ccc] p-[6px] text-[12px] rounded-sm pointer-events-none shadow-[0_2px_6px_rgba(0,0,0,0.2)]"
-        style={{
-          visibility: "hidden",
-        }}
-      ></div>
-      <svg ref={svgRef} width={800} height={500}></svg>
-    </>
+    <Card>
+      <CardContent>
+        <div
+          id="tooltip"
+          className="absolute bg-white  border-[1px] border-[#ccc] p-[6px] text-[12px] rounded-sm pointer-events-none shadow-[0_2px_6px_rgba(0,0,0,0.2)]"
+          style={{
+            visibility: "hidden",
+          }}
+        ></div>
+        <svg ref={svgRef} width={800} height={500}></svg>
+      </CardContent>
+    </Card>
   )
 }
 

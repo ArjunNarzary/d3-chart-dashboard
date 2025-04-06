@@ -40,7 +40,7 @@ export function useApi<T>({
       }
       setStatus("error")
     }
-  }, [fetchFn])
+  }, [fetchFn, args])
 
   useEffect(() => {
     if (immediate) {
