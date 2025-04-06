@@ -5,3 +5,8 @@ export interface IResponseType {
     }
   }
 }
+
+export interface DataItem {
+  category: string
+  value: number
+}

@@ -12,7 +12,7 @@ const BarChart = ({ data }: { data: IResponseType }) => {
     const svg = d3.select(svgRef.current)
     svg.selectAll("*").remove()
 
-    const width = 800
+    const width = 600
     const height = 500
     const margin = { top: 60, right: 30, bottom: 100, left: 60 }
 

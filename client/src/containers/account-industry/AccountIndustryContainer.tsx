@@ -4,6 +4,8 @@ import { useApi } from "../../hooks/useApi"
 import { IResponseType } from "../../interfaces"
 import BarChart from "../../components/BarChart"
 import ChartLoader from "../../components/ChartLoader"
+import DonutChart from "../../components/DonutChart"
+import DonutLoader from "../../components/DonutLoader"
 
 export default function AccountIndustryContainer() {
   const { data, loading } = useApi<IResponseType>({
@@ -18,7 +20,9 @@ export default function AccountIndustryContainer() {
           <Grid size={{ sm: 12, md: 6 }}>
             {loading ? <ChartLoader /> : data && <BarChart data={data} />}
           </Grid>
-          <Grid size={{ sm: 12, md: 6 }}></Grid>
+          <Grid size={{ sm: 12, md: 6 }}>
+            {loading ? <DonutLoader /> : data && <DonutChart data={data} />}
+          </Grid>
           <Grid size={12}></Grid>
         </Grid>
       </CardContent>
